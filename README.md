@@ -20,3 +20,12 @@ Generative AI and AWS DeepComposer for Udacity AWS Machine Learning Foundations
 * One interface to review past evaluations and detection logic
 * Models learn from past attempts to defraud Amazon
 * Amazon SageMaker integration
+
+### Tools and Categories
+* Amazon Personalize - AI Service
+* Amazon SageMaker - ML Service
+* TensorFlow - ML Framework
+* SageMaker Ground Truth - ML Service
+* PyTorch- ML Framework
+* Amazon Rekognition Image - AI Service
+* Keras - ML Interface
