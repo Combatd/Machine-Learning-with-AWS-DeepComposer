@@ -54,3 +54,7 @@ The best way we’ve found to explain this is to use the metaphor of an orchestr
 
 ## Demo: Compose Music with DeepComposer
 We used a Generative AI Technique to create a Rock Composition based on "Twinkle, Twinkle, Little Star" sample input! ```twinklerockdeepcomposer.midi```
+
+We could technically use the Virtual Keyboard to generate a composition based on
+an input melody provided with the notes we played. This step will take few minutes to generate a composition inspired by the chosen genre
+Using pre-trained models to generate new music is fun!
