@@ -83,3 +83,25 @@ Over time, the loss functions stabilizes to a point, we call this convergence. T
 * The generated composition is returned.
 * The user can hear the composition in the console.
 * The user can share the composition to SoundCloud.
+
+## Training Architecture
+
+## How to measure the quality of the music we’re generating:
+* We can monitor the loss function to make sure the model is converging
+* We can check the similarity index to see how close is the model to mimicking the style of the data. When the graph of the similarity index smoothes out and becomes less spikey, we can be confident that the model is converging
+* We can listen to the music created by the generated model to see if it's doing a good job. The musical quality of the model should improve as the number of training epochs increases.
+
+### Workflow for Training
+
+* User launch a training job from the AWS DeepComposer console by selecting hyperparameters and data set filtering tags
+* The backend consists of an API Layer (API gateway and lambda) write request to DynamoDB
+* Triggers a lambda function that starts the training workflow
+* It then uses AWS Step Funcitons to launch the training job on Amazon SageMaker
+* Status is continually monitored and updated to DynamoDB
+* The console continues to poll the backend for the status of the training job and update the results live so users can see how the model is learning
+
+### Challenges with GANs
+* Clean datasets are hard to obtain
+* Not all melodies sound good in all genres
+* Convergence in GAN is tricky – it can be fleeting rather than being a stable state
+* Complexity in defining meaningful quantitive metrics to measure the quality of music created
