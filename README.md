@@ -220,3 +220,93 @@ The final process for music generation then is as follows:
 * Create a series of random numbers to represent the random noise vector.
 * Pass these as input to our trained generator model, producing a series of output piano rolls. Each output piano roll represents some instrument in the composition.
 * Transform the series of piano rolls back into a common music format (MIDI), assigning an instrument for each track.
+
+## Build a Custom GAN Part 1: Notebooks and Data Preparation
+In this demonstration we’re going to synchronize what you’ve learned about software development practices and machine learning, using AWS DeepComposer to explore those best practices against a real life use case.
+
+### Coding Along With The Instructor (Optional)
+To create the custom GAN, you will need to use an instance type that is not covered in the Amazon SageMaker free tier. If you want to code along with the demo and build a custom GAN, you may incur a cost.
+
+You can learn more about SageMaker costs in the Amazon SageMaker pricing documentation
+
+
+### Setting Up the DeepComposer Notebook
+To get to the main Amazon SageMaker service screen, navigate to the AWS SageMaker console. You can also get there from within the AWS Management Console by searching for Amazon SageMaker.
+Once inside the SageMaker console, look to the left hand menu and select Notebook Instances.
+Next, click on Create notebook instance.
+In the Notebook instance setting section, give the notebook a name, for example, DeepComposerUdacity.
+Based on the kind of CPU, GPU and memory you need the next step is to select an instance type. For our purposes, we’ll configure a ml.c5.4xlarge
+Leave the Elastic Inference defaulted to none.
+In the Permissions and encryption section, create a new IAM role using all of the defaults.
+When you see that the role was created successfully, navigate down a little ways to the Git repositories section
+Select Clone a public Git repository to this notebook instance only
+Copy and paste the public URL into the Git repository URL section: https://github.com/aws-samples/aws-deepcomposer-samples
+Select Create notebook instance
+Give SageMaker a few minutes to provision the instance and clone the Git repository
+Exploring the Notebook
+Now that it’s configured and ready to use, let’s take a moment to investigate what’s inside the notebook.
+
+
+When the status reads "InService" you can open the Jupyter notebook.
+
+Status is InService
+
+### Open the Notebook
+Click Open Jupyter.
+When the notebook opens, click on Lab 2.
+When the lab opens click on GAN.ipynb.
+Review: Generative Adversarial Networks (GANs).
+GANs consist of two networks constantly competing with each other:
+
+* Generator network that tries to generate data based on the data it was trained on.
+* Discriminator network that is trained to differentiate between real data and data which is created by the generator.
+Note: The demo often refers to the discriminator as the critic. The two terms can be used interchangeably.
+
+
+### Set Up the Project
+Run the first Dependencies cell to install the required packages
+Run the second Dependencies cell to import the dependencies
+Run the Configuration cell to define the configuration variables
+Note: While executing the cell that installs dependency packages, you may see warning messages indicating that later versions of conda are available for certain packages. It is completely OK to ignore this message. It should not affect the execution of this notebook.
+
+Click run
+Click Run or Shift-Enter in the cell
+
+* Good Coding Practices
+   * Do not hard-code configuration variables
+   * Move configuration variables to a separate config file
+   * Use code comments to allow for easy code collaboration
+
+### Data Preparation
+The next section of the notebook is where we’ll prepare the data so it can train the generator network.
+
+
+Why Do We Need to Prepare Data?
+Data often comes from many places (like a website, IoT sensors, a hard drive, or physical paper) and it’s usually not clean or in the same format. Before you can better understand your data, you need to make sure it’s in the right format to be analyzed. Thankfully, there are library packages that can help! One such library is called NumPy, which was imported into our notebook.
+
+Piano Roll Format
+The data we are preparing today is music and it comes formatted in what’s called a “piano roll”. Think of a piano roll as a 2D image where the X-axis represents time and the Y-axis represents the pitch value. Using music as images allows us to leverage existing techniques within the computer vision domain.
+
+Our data is stored as a NumPy Array, or grid of values. Our dataset comprises 229 samples of 4 tracks (all tracks are piano). Each sample is a 32 time-step snippet of a song, so our dataset has a shape of:
+
+```(num_samples, time_steps, pitch_range, tracks)```
+or
+
+```(229, 32, 128, 4)```
+Piano Roll visualization
+Each Piano Roll Represents A Separate Piano Track in the Song
+
+### Load and View the Dataset
+Run the next cell to play a song from the dataset.
+Run the next cell to load the dataset as a nympy array and output the shape of the data to confirm that it matches the (229, 32, 128, 4) shape we are expecting
+Run the next cell to see a graphical representation of the data.
+Graphical representation of model data
+Graphical Representation of Model Data
+
+### Create a Tensorflow Dataset
+Much like there are different libraries to help with cleaning and formatting data, there are also different frameworks. Some frameworks are better suited for particular kinds of machine learning workloads and for this deep learning use case, we’re going to use a Tensorflow framework with a Keras library.
+
+We'll use the dataset object to feed batches of data into our model.
+
+Run the first Load Data cell to set parameters.
+Run the second Load Data cell to prepare the data.
