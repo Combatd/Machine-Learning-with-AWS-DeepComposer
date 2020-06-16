@@ -188,3 +188,24 @@ The learning rate controls how rapidly the weights and biases of each network ar
 A ratio of the number of times the discriminator is updated per generator training epoch. Updating the discriminator multiple times per generator training epoch is useful because it can improve the discriminators accuracy. Changing this ratio might allow the generator to learn more quickly early-on, but will increase the overall training time.
 
 While we provide sensible defaults for these hyperparameters in the AWS DeepComposer console, you are encouraged to explore other settings to see how each changes your model’s performance and time required to finish training your model.
+
+## Evaluation
+Typically when training any sort of model, it is a standard practice to monitor the value of the loss function throughout the duration of the training. The discriminator loss has been found to correlate well with sample quality. You should expect the discriminator loss to converge to zero and the generator loss to converge to some number which need not be zero. When the loss function plateaus, it is an indicator that the model is no longer learning. At this point, you can stop training the model. You can view these loss function graphs in the AWS DeepComposer console.
+
+### Sample output quality improves with more training
+After 400 epochs of training, discriminator loss approaches near zero and the generator converges to a steady-state value. Loss is useful as an evaluation metric since the model will not improve as much or stop improving entirely when the loss plateaus.
+
+While standard mechanisms exist for evaluating the accuracy of more traditional models like classification or regression, evaluating generative models is an active area of research. Within the domain of music generation, this hard problem is even less well-understood.
+
+To address this, we take high-level measurements of our data and show how well our model produces music that aligns with those measurements. If our model produces music which is close to the mean value of these measurements for our training dataset, our music should match the general “shape”. You’ll see graphs of these measurements within the AWS DeepComposer console
+
+Here are a few such measurements:
+
+* Empty bar rate: The ratio of empty bars to total number of bars.
+* Number of pitches used: A metric that captures the distribution and position of pitches.
+* In Scale Ratio: Ratio of the number of notes that are in the key of C, which is a common key found in music, to the total number of notes.
+
+### Music to your ears
+Of course, music is much more complex than a few measurements. It is often important to listen directly to the generated music to better understand changes in model performance. You’ll find this final mechanism available as well, allowing you to listen to the model outputs as it learns.
+
+Once training has completed, you may use the model created by the generator network to create new musical compositions.
