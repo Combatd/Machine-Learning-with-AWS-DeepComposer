@@ -208,4 +208,15 @@ Here are a few such measurements:
 ### Music to your ears
 Of course, music is much more complex than a few measurements. It is often important to listen directly to the generated music to better understand changes in model performance. You’ll find this final mechanism available as well, allowing you to listen to the model outputs as it learns.
 
+## Inference
+
 Once training has completed, you may use the model created by the generator network to create new musical compositions.
+
+Once this model is trained, the generator network alone can be run to generate new accompaniments for a given input melody. If you recall, the model took as input a single-track piano roll representing melody and a noise vector to help generate varied output.
+
+The final process for music generation then is as follows:
+
+* Transform single-track music input into piano roll format.
+* Create a series of random numbers to represent the random noise vector.
+* Pass these as input to our trained generator model, producing a series of output piano rolls. Each output piano roll represents some instrument in the composition.
+* Transform the series of piano rolls back into a common music format (MIDI), assigning an instrument for each track.
